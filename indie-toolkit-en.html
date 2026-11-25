@@ -138,12 +138,11 @@ so that I can check a platform is reachable without entering Play mode.</code></
     <tbody>
       <tr><td><b>Inspector attributes</b></td><td><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>. Used by the toolkit's own settings.</td><td>Game designers, everyone</td></tr>
       <tr><td><b>Presets</b></td><td>Placement and scatter settings saved as assets (ScriptableObject): radius, density, spacing, random scale and rotation, grid. Reusable across scenes.</td><td>Everyone</td></tr>
-      <tr><td><b>Prefab palette</b></td><td>A window that lists prefabs with previews and selects the one to place.</td><td>Environment artists, level designers</td></tr>
+      <tr><td><b>Prefab palette</b></td><td>A palette is an asset that points to a folder: every prefab in it shows up in a window with its preview, and prefabs can also be added or removed by hand. One palette per theme. Selecting a prefab picks it for the placement tools. Every instance stays linked to its prefab.</td><td>Environment artists, level designers</td></tr>
       <tr><td><b>Placement</b></td><td>Place the selected prefab on any surface with a click: aligned to the surface normal, optional grid snap, random rotation and scale within a range.</td><td>Environment artists, level designers</td></tr>
       <tr><td><b>Scatter brush</b></td><td>Paint many instances with a brush: radius, density, minimum spacing. An eraser removes them. A preview shows the brush in the scene.</td><td>Environment artists</td></tr>
       <tr><td><b>Blockout shapes</b></td><td>Box generated from code, resized with handles in the scene. Replace a blockout shape with a final prefab.</td><td>Level designers, environment artists</td></tr>
-      <tr><td><b>Block grid</b></td><td>Paint, erase and clear modular pieces on a 3D grid.</td><td>Level designers</td></tr>
-      <tr><td><b>Scene notes</b></td><td>Notes placed in the scene, with author and role, listed in a window. The team's feedback lives where the problem is.</td><td>Every role</td></tr>
+      <tr><td><b>Block grid</b></td><td>Two phases. <b>Place the grid:</b> a click on any surface puts a horizontal grid there, with a preview and parameters you can change later (N×N cells of side M). <b>Paint on it:</b> on the selected grid, paint modular pieces from the palette, with a preview snapped to the cell, 90° rotation, a click to place, one piece per cell; erase a piece or clear the grid. Pieces are children of their grid: moving, rotating or scaling the grid moves, rotates or scales them too. Many grids in one scene, also stacked. Saved with the scene.</td><td>Level designers</td></tr>
       <tr><td><b>Undo</b></td><td>Every operation of every tool can be undone with Ctrl+Z.</td><td>Everyone</td></tr>
     </tbody>
   </table></div>
@@ -157,8 +156,8 @@ so that I can check a platform is reachable without entering Play mode.</code></
       <tr><td>Presets</td><td>Unity's built-in Presets (the preset icon in the Inspector)</td></tr>
       <tr><td>Prefab palette, placement, scatter brush</td><td>Unity Terrain: Paint Trees and Paint Details</td></tr>
       <tr><td>Blockout shapes</td><td>ProBuilder (Package Manager)</td></tr>
-      <tr><td>Block grid</td><td>Cube Grid in Unreal Engine's Modeling Mode (documentation and videos are enough)</td></tr>
-      <tr><td>Scene notes</td><td>Comments in a collaborative tool you use, such as Figma or Miro</td></tr>    </tbody>
+      <tr><td>Block grid</td><td>Unity Tilemap with the GameObject Brush (2D Tilemap Extras package) for painting; Cube Grid in Unreal Engine's Modeling Mode for placing and moving the grid (documentation and videos are enough); the GDC talk <i>Skyrim's Modular Approach to Level Design</i> (Joel Burgess, 2013) for why teams build with modular kits</td></tr>
+    </tbody>
   </table></div>
 
   <h3>Role features <span class="tag s">role</span></h3>
@@ -181,6 +180,7 @@ so that I can check a platform is reachable without entering Play mode.</code></
     <li>More blockout shapes: ramp, stairs, wall with an opening.</li>
     <li>A window built with UI Toolkit.</li>
     <li>Naming checker for assets.</li>
+    <li>Scene notes: notes placed in the scene, with author and role, listed in a window.</li>
     <li>A second role feature.</li>
   </ul>
 
@@ -215,25 +215,25 @@ so that I can check a platform is reachable without entering Play mode.</code></
     <li><div class="head"><span class="code">M2</span><span class="title">Palette and attributes</span><span class="due">Wed, December 16</span></div>
       <ul>
         <li><b>Group:</b> reverse engineering analysis of the palette (Terrain: Paint Trees) and the attributes (Odin Inspector).</li>
-        <li>Prefab palettes saved as assets, one per theme, and the window that shows them.</li>
+        <li>Prefab palettes saved as assets, one per theme, filled from a folder, and the window that shows them with previews.</li>
+        <li>Clicking a prefab in the window creates an instance at the scene origin, linked to its prefab, with Undo.</li>
         <li><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>, used by the toolkit's settings.</li>
       </ul></li>
-    <li><div class="head"><span class="code">M3</span><span class="title">Placement and scatter</span><span class="due">Wed, January 13</span></div>
+    <li><div class="head"><span class="code">M3</span><span class="title">Placement, scatter and grid</span><span class="due">Wed, January 13</span></div>
       <ul>
-        <li><b>Group:</b> reverse engineering analysis of presets (Unity Presets), placement and scatter (Terrain: Paint Trees and Paint Details).</li>
-        <li>Place prefabs on surfaces: normal alignment, grid snap, random rotation and scale.</li>
+        <li><b>Group:</b> reverse engineering analysis of presets (Unity Presets), placement and scatter (Terrain: Paint Trees and Paint Details), block grid (Tilemap GameObject Brush, Unreal's Cube Grid).</li>
+        <li>The prefab selected in the palette is now placed with a click on any surface: normal alignment, grid snap, random rotation and scale.</li>
         <li>Placement and scatter presets.</li>
         <li>Scatter brush with radius, density and minimum spacing.</li>
         <li>Eraser and brush preview.</li>
+        <li>Block grid: place the grid, then paint, rotate, erase and clear pieces on it. It must work with the shared test kit given in class.</li>
         <li>Undo on every operation.</li>
       </ul></li>
     <li><div class="head"><span class="code">M4</span><span class="title">Blockout</span><span class="due">Wed, January 20</span></div>
       <ul>
-        <li><b>Group:</b> reverse engineering analysis of blockout (ProBuilder), block grid (Unreal's Cube Grid) and scene notes (comments in Figma or Miro).</li>
+        <li><b>Group:</b> reverse engineering analysis of blockout (ProBuilder).</li>
         <li>Box blockout shape, resized with handles.</li>
         <li>Replace a blockout shape with a final prefab.</li>
-        <li>Block grid: paint, erase, clear.</li>
-        <li>Scene notes.</li>
       </ul></li>
     <li><div class="head"><span class="code">FIN</span><span class="title">Final delivery</span><span class="due">Wed, January 27</span></div>
       <ul>

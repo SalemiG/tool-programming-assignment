@@ -138,12 +138,11 @@ per verificare che una piattaforma sia raggiungibile senza entrare in Play.</cod
     <tbody>
       <tr><td><b>Attributi per l'inspector</b></td><td><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>. Usati dalle impostazioni del toolkit stesso.</td><td>Game designer, tutti</td></tr>
       <tr><td><b>Preset</b></td><td>Impostazioni di piazzamento e scatter salvate come asset (ScriptableObject): raggio, densità, spaziatura, scala e rotazione casuali, griglia. Riutilizzabili tra le scene.</td><td>Tutti</td></tr>
-      <tr><td><b>Palette di prefab</b></td><td>Una finestra che elenca i prefab con le anteprime e seleziona quello da piazzare.</td><td>Environment artist, level designer</td></tr>
+      <tr><td><b>Palette di prefab</b></td><td>Una palette è un asset che punta a una cartella: ogni prefab che contiene compare in una finestra con la sua anteprima, e si possono aggiungere o togliere prefab a mano. Una palette per tema. Selezionare un prefab lo sceglie per i tool di piazzamento. Ogni istanza resta collegata al suo prefab.</td><td>Environment artist, level designer</td></tr>
       <tr><td><b>Piazzamento</b></td><td>Piazza il prefab selezionato su qualsiasi superficie con un clic: allineato alla normale, snap alla griglia opzionale, rotazione e scala casuali entro un intervallo.</td><td>Environment artist, level designer</td></tr>
       <tr><td><b>Pennello di scatter</b></td><td>Dipinge molte istanze con un pennello: raggio, densità, spaziatura minima. Una gomma le rimuove. Un'anteprima mostra il pennello in scena.</td><td>Environment artist</td></tr>
       <tr><td><b>Forme di blockout</b></td><td>Box generato da codice, ridimensionato con le handle in scena. Sostituzione di una forma di blockout con un prefab finale.</td><td>Level designer, environment artist</td></tr>
-      <tr><td><b>Griglia a blocchi</b></td><td>Dipingere, cancellare e svuotare pezzi modulari su una griglia 3D.</td><td>Level designer</td></tr>
-      <tr><td><b>Note in scena</b></td><td>Note piazzate nella scena, con autore e ruolo, elencate in una finestra. Il feedback del team sta dove sta il problema.</td><td>Tutti i ruoli</td></tr>
+      <tr><td><b>Griglia a blocchi</b></td><td>Due fasi. <b>Piazzare la griglia:</b> un clic su qualsiasi superficie mette lì una griglia orizzontale, con anteprima e parametri modificabili anche dopo (N×N celle di lato M). <b>Dipingerci sopra:</b> sulla griglia selezionata si dipingono pezzi modulari dalla palette, con anteprima agganciata alla cella, rotazione a 90°, clic per piazzare, un pezzo per cella; un pezzo si cancella, la griglia si svuota. I pezzi sono figli della griglia: spostandola, ruotandola o scalandola si spostano, ruotano e scalano anche loro. Più griglie nella stessa scena, anche sovrapposte. Salvato con la scena.</td><td>Level designer</td></tr>
       <tr><td><b>Undo</b></td><td>Ogni operazione di ogni tool si annulla con Ctrl+Z.</td><td>Tutti</td></tr>
     </tbody>
   </table></div>
@@ -157,8 +156,8 @@ per verificare che una piattaforma sia raggiungibile senza entrare in Play.</cod
       <tr><td>Preset</td><td>I Preset integrati di Unity (l'icona dei preset nell'Inspector)</td></tr>
       <tr><td>Palette di prefab, piazzamento, pennello di scatter</td><td>Terrain di Unity: Paint Trees e Paint Details</td></tr>
       <tr><td>Forme di blockout</td><td>ProBuilder (Package Manager)</td></tr>
-      <tr><td>Griglia a blocchi</td><td>Cube Grid della Modeling Mode di Unreal Engine (bastano documentazione e video)</td></tr>
-      <tr><td>Note in scena</td><td>I commenti di uno strumento collaborativo che usate, come Figma o Miro</td></tr>    </tbody>
+      <tr><td>Griglia a blocchi</td><td>Tilemap di Unity con il GameObject Brush (package 2D Tilemap Extras) per il dipingere; Cube Grid della Modeling Mode di Unreal Engine per piazzare e spostare la griglia (bastano documentazione e video); il talk GDC <i>Skyrim's Modular Approach to Level Design</i> (Joel Burgess, 2013) per capire perché i team costruiscono con kit modulari</td></tr>
+    </tbody>
   </table></div>
 
   <h3>Feature di ruolo <span class="tag s">ruolo</span></h3>
@@ -181,6 +180,7 @@ per verificare che una piattaforma sia raggiungibile senza entrare in Play.</cod
     <li>Altre forme di blockout: rampa, scala, muro con apertura.</li>
     <li>Una finestra fatta con UI Toolkit.</li>
     <li>Controllo dei nomi degli asset.</li>
+    <li>Note in scena: note piazzate nella scena, con autore e ruolo, elencate in una finestra.</li>
     <li>Una seconda feature di ruolo.</li>
   </ul>
 
@@ -215,25 +215,25 @@ per verificare che una piattaforma sia raggiungibile senza entrare in Play.</cod
     <li><div class="head"><span class="code">M2</span><span class="title">Palette e attributi</span><span class="due">mer 16 dicembre</span></div>
       <ul>
         <li><b>Di gruppo:</b> analisi di reverse engineering della palette (Terrain: Paint Trees) e degli attributi (Odin Inspector).</li>
-        <li>Palette di prefab salvate come asset, una per tema, e la finestra che le mostra.</li>
+        <li>Palette di prefab salvate come asset, una per tema, riempite da una cartella, e la finestra che le mostra con le anteprime.</li>
+        <li>Un clic su un prefab nella finestra crea un'istanza nell'origine della scena, collegata al suo prefab, con Undo.</li>
         <li><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>, usati dalle impostazioni del toolkit.</li>
       </ul></li>
-    <li><div class="head"><span class="code">M3</span><span class="title">Piazzamento e scatter</span><span class="due">mer 13 gennaio</span></div>
+    <li><div class="head"><span class="code">M3</span><span class="title">Piazzamento, scatter e griglia</span><span class="due">mer 13 gennaio</span></div>
       <ul>
-        <li><b>Di gruppo:</b> analisi di reverse engineering di preset (Preset di Unity), piazzamento e scatter (Terrain: Paint Trees e Paint Details).</li>
-        <li>Piazzamento dei prefab sulle superfici: allineamento alla normale, snap alla griglia, rotazione e scala casuali.</li>
+        <li><b>Di gruppo:</b> analisi di reverse engineering di preset (Preset di Unity), piazzamento e scatter (Terrain: Paint Trees e Paint Details), griglia a blocchi (GameObject Brush del Tilemap, Cube Grid di Unreal).</li>
+        <li>Il prefab selezionato nella palette ora si piazza con un clic su qualsiasi superficie: allineamento alla normale, snap alla griglia, rotazione e scala casuali.</li>
         <li>Preset di piazzamento e scatter.</li>
         <li>Pennello di scatter con raggio, densità e spaziatura minima.</li>
         <li>Gomma e anteprima del pennello.</li>
+        <li>Griglia a blocchi: piazza la griglia, poi dipingi, ruota, cancella e svuota i pezzi. Deve funzionare con il kit di test comune dato in aula.</li>
         <li>Undo su ogni operazione.</li>
       </ul></li>
     <li><div class="head"><span class="code">M4</span><span class="title">Blockout</span><span class="due">mer 20 gennaio</span></div>
       <ul>
-        <li><b>Di gruppo:</b> analisi di reverse engineering di blockout (ProBuilder), griglia a blocchi (Cube Grid di Unreal) e note in scena (commenti di Figma o Miro).</li>
+        <li><b>Di gruppo:</b> analisi di reverse engineering di blockout (ProBuilder).</li>
         <li>Forma di blockout box, ridimensionata con le handle.</li>
         <li>Sostituzione di una forma di blockout con un prefab finale.</li>
-        <li>Griglia a blocchi: dipingi, cancella, svuota.</li>
-        <li>Note in scena.</li>
       </ul></li>
     <li><div class="head"><span class="code">FIN</span><span class="title">Consegna finale</span><span class="due">mer 27 gennaio</span></div>
       <ul>
