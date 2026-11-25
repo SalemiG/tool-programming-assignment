@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Indie Toolkit</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#18181D; --surface:#212127; --fg:#FFFAEE; --muted:#B9B4A8; --line:#34343C;
+  --accent:#FF9934; --accent-soft:#3A2A1A; --swarm:#5FA8E6; --swarm-soft:#16263A;
+  --f-display:"Lato","Segoe UI",system-ui,sans-serif;
+  --f-body:"Lato","Segoe UI",system-ui,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.6;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:880px;margin:0 auto}
+header{padding-block:32px 20px;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+h1{font-family:var(--f-display);font-weight:900;font-size:clamp(34px,7vw,52px);line-height:1.05;margin:8px 0 10px;letter-spacing:.01em;text-wrap:balance}
+h1 span{color:var(--accent)}
+.lede{max-width:62ch;margin:0;color:var(--fg)}
+.meta{display:flex;flex-wrap:wrap;gap:8px 20px;margin-top:16px;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.meta b{color:var(--fg);font-weight:500}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;gap:4px;overflow-x:auto;padding-block:10px;border-bottom:1px solid var(--line);scrollbar-width:none}
+nav.tabs button{font:600 14px/1 var(--f-display);letter-spacing:.04em;text-transform:uppercase;background:none;border:1px solid transparent;color:var(--muted);padding:10px 12px;border-radius:6px;cursor:pointer;white-space:nowrap}
+nav.tabs button:hover{color:var(--fg)}
+nav.tabs button[aria-selected="true"]{color:var(--accent);border-color:var(--line);background:var(--surface)}
+nav.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+section.panel{padding-block:24px 8px}
+h2{font-family:var(--f-display);font-weight:600;font-size:26px;margin:0 0 12px;text-wrap:balance}
+h3{font-family:var(--f-display);font-weight:600;font-size:19px;margin:28px 0 8px;text-wrap:balance}
+p,li{max-width:68ch}
+ul,ol{padding-left:22px}
+li{margin-block:4px}
+code{font-family:var(--f-mono);font-size:.88em;background:var(--accent-soft);padding:1px 5px;border-radius:4px}
+pre{font-family:var(--f-mono);font-size:13.5px;line-height:1.35;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;overflow-x:auto}
+pre code{background:none;padding:0}
+.callout{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px 16px;margin-block:16px}
+.callout.swarm{border-color:var(--swarm);background:var(--swarm-soft)}
+.callout p{margin:0}
+.tbl{overflow-x:auto;margin-block:12px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:14.5px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+th{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:500}
+tr:last-child td{border-bottom:0}
+.tag{display:inline-block;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.05em;padding:2px 7px;border-radius:999px;border:1px solid var(--line);color:var(--muted);vertical-align:middle}
+.tag.p{color:var(--accent);border-color:var(--accent)}
+.tag.s{color:var(--swarm);border-color:var(--swarm)}
+.ms{display:grid;gap:14px;margin-block:16px;padding:0;list-style:none}
+.ms>li{max-width:none;border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:16px}
+.ms .head{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 14px;margin-bottom:6px}
+.ms .code{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--accent)}
+.ms .title{font-family:var(--f-display);font-weight:600;font-size:18px}
+.ms .due{margin-left:auto;font-family:var(--f-mono);font-size:13px;color:var(--muted)}
+.ms ul{margin:6px 0 0}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-block:12px}
+.grid2>div{border:1px solid var(--line);background:var(--surface);border-radius:8px;padding:14px 16px;min-width:0}
+.grid2 h4{margin:0 0 4px;font-family:var(--f-display);font-size:16px}
+.grid2 p{margin:0;font-size:15px}
+footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;color:var(--muted)}
+</style>
+</head><body>
+<div class="wrap">
+<header>
+  <div class="eyebrow">Nash · Game Programming 2 · Tool Programming · Lab</div>
+  <h1>Indie <span>Toolkit</span></h1>
+  <p class="lede">A Unity editor toolkit for a small 3D game team: the tools your artists, designers and sound designers need every day, built once and carried into every project you make from now on. You design it like a real tool, starting from the people who will use it. Milestones are assigned one at a time.</p>
+  <div class="meta"><span>Final delivery <b>Wed, January 27</b></span><span><b>Individual</b> project, <b>group</b> analysis</span><span>Unity <b>3D</b> projects only</span></div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sections">
+  <button role="tab" id="t-project" aria-controls="project" aria-selected="true">The project</button>
+  <button role="tab" id="t-users" aria-controls="users" aria-selected="false">Users</button>
+  <button role="tab" id="t-features" aria-controls="features" aria-selected="false">Features</button>
+  <button role="tab" id="t-tech" aria-controls="tech" aria-selected="false">Technical requirements</button>
+  <button role="tab" id="t-ms" aria-controls="ms" aria-selected="false">Milestones</button>
+</nav>
+
+<section class="panel" id="project" role="tabpanel" aria-labelledby="t-project">
+  <h2>The project</h2>
+  <p>In every game you make, someone builds the same things again: a way to place props, a quick blockout, a check that nothing is missing in the scene. A tools programmer builds them <b>once</b>, makes them easy to use for people who do not write code, and reuses them in the next project.</p>
+  <p>You build a <b>Unity package</b> with a set of editor tools for a small indie team working on a 3D game. Some tools are the same for everyone. One is chosen by you, for a role in your own team, after talking to the people in that role.</p>
+
+  <h3>How it works</h3>
+  <ol>
+    <li><b>Analyze</b> who will use the toolkit: the roles in an indie team and what slows them down in the editor.</li>
+    <li><b>Write</b> what each of them needs as user stories, and turn them into features.</li>
+    <li><b>Build</b> the core tools, milestone by milestone.</li>
+    <li><b>Add</b> one tool for a role of your choice, backed by your own analysis.</li>
+    <li><b>Release</b> the package so that any Unity project can install it from Git.</li>
+  </ol>
+
+  <h3>Inspired by</h3>
+  <p>The toolkit takes small, simplified pieces from tools used in the industry. You do not copy them: you study what they do and build your own minimal version.</p>
+  <div class="grid2">
+    <div><h4>Odin Inspector</h4><p>Attributes that turn a plain inspector into a clear, safe interface for designers.</p></div>
+    <div><h4>ProBuilder</h4><p>Quick blockout shapes, without the full mesh editing.</p></div>
+    <div><h4>Unreal Engine</h4><p>Foliage painting and cube-grid blockout, reduced to the essentials.</p></div>
+  </div>
+
+  <h3>Creative freedom</h3>
+  <p>Interface, shortcuts and workflow are up to you, as long as every feature does what is described. Indie Toolkit is the name of the project: give your package its own name.</p>
+</section>
+
+<section class="panel" id="users" role="tabpanel" aria-labelledby="t-users" hidden>
+  <h2>Users</h2>
+  <p>A tool is good only if someone uses it. Your users are the people you work with in a team: their needs decide what you build.</p>
+
+  <h3>The roles</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Area</th><th>Roles</th></tr></thead>
+    <tbody>
+      <tr><td>2D art</td><td>2D artist, concept artist</td></tr>
+      <tr><td>3D art</td><td>Character artist, environment artist, VFX artist, animator</td></tr>
+      <tr><td>Design</td><td>Game designer, level designer</td></tr>
+      <tr><td>Audio</td><td>Sound designer</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>From people to features</h3>
+  <ol>
+    <li><b>Stakeholders:</b> who uses the tool, and what they do in the editor.</li>
+    <li><b>User stories:</b> one need per line, in the form <i>As a … I want … so that …</i></li>
+    <li><b>Features:</b> what the tool must do to satisfy each story, and how you will check it works.</li>
+    <li><b>Priority:</b> how many roles it helps, how much it costs, how risky it is.</li>
+  </ol>
+<pre><code>As a level designer
+I want to see the player's height and jump arc in the scene
+so that I can check a platform is reachable without entering Play mode.</code></pre>
+  <div class="callout swarm"><p>The core features come from the teacher's analysis, shown in class as a worked example. You apply the same method, as a class, to find the role features. An analysis is a hypothesis until a real user confirms it: interview students from the courses of those roles, ask what slows them down in Unity, and write down what they said.</p></div>
+</section>
+
+<section class="panel" id="features" role="tabpanel" aria-labelledby="t-features" hidden>
+  <h2>Features</h2>
+  <p>Three levels: <span class="tag p">core</span> for everyone, <span class="tag s">role</span> at least one chosen by you, <span class="tag">extra</span> for a higher grade.</p>
+
+  <h3>Core <span class="tag p">core</span></h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Feature</th><th>What it must do</th><th>Main users</th></tr></thead>
+    <tbody>
+      <tr><td><b>Inspector attributes</b></td><td><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>. Used by the toolkit's own settings.</td><td>Game designers, everyone</td></tr>
+      <tr><td><b>Presets</b></td><td>Placement and scatter settings saved as assets (ScriptableObject): radius, density, spacing, random scale and rotation, grid. Reusable across scenes.</td><td>Everyone</td></tr>
+      <tr><td><b>Prefab palette</b></td><td>A window that lists prefabs with previews and selects the one to place.</td><td>Environment artists, level designers</td></tr>
+      <tr><td><b>Placement</b></td><td>Place the selected prefab on any surface with a click: aligned to the surface normal, optional grid snap, random rotation and scale within a range.</td><td>Environment artists, level designers</td></tr>
+      <tr><td><b>Scatter brush</b></td><td>Paint many instances with a brush: radius, density, minimum spacing. An eraser removes them. A preview shows the brush in the scene.</td><td>Environment artists</td></tr>
+      <tr><td><b>Blockout shapes</b></td><td>Box generated from code, resized with handles in the scene. Replace a blockout shape with a final prefab.</td><td>Level designers, environment artists</td></tr>
+      <tr><td><b>Block grid</b></td><td>Paint, erase and clear modular pieces on a 3D grid.</td><td>Level designers</td></tr>
+      <tr><td><b>Scene notes</b></td><td>Notes placed in the scene, with author and role, listed in a window. The team's feedback lives where the problem is.</td><td>Every role</td></tr>
+      <tr><td><b>Undo</b></td><td>Every operation of every tool can be undone with Ctrl+Z.</td><td>Everyone</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Reverse engineering analysis</h3>
+  <p>For every core feature covered in a milestone, the class writes together a reverse engineering analysis of its reference tool, in a shared repository. Each of you states in your own README what you keep and what you cut compared to the reference.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Feature</th><th>Reference</th></tr></thead>
+    <tbody>
+      <tr><td>Inspector attributes</td><td>Odin Inspector (free educational license or 90-day trial)</td></tr>
+      <tr><td>Presets</td><td>Unity's built-in Presets (the preset icon in the Inspector)</td></tr>
+      <tr><td>Prefab palette, placement, scatter brush</td><td>Unity Terrain: Paint Trees and Paint Details</td></tr>
+      <tr><td>Blockout shapes</td><td>ProBuilder (Package Manager)</td></tr>
+      <tr><td>Block grid</td><td>Cube Grid in Unreal Engine's Modeling Mode (documentation and videos are enough)</td></tr>
+      <tr><td>Scene notes</td><td>Comments in a collaborative tool you use, such as Figma or Miro</td></tr>    </tbody>
+  </table></div>
+
+  <h3>Role features <span class="tag s">role</span></h3>
+  <p>The analysis is <b>a group effort</b>: the class splits the roles, interviews at least one student for each role and writes together a catalog of user stories and feature proposals, in the shared repository.</p>
+  <p>The choice is <b>individual</b>: each of you picks <b>at least three proposals</b> from the catalog. The teacher picks with you the one to build, based on the estimated workload. Big ideas are welcome: they can be scaled down.</p>
+  <p>Then <b>you plan it</b>: you decide in which milestones you build each part. Keep this table in your README, one row per proposal, and update it at every milestone with what you planned and what you actually did.</p>
+  <div class="tbl"><table>
+    <thead><tr><th>Role</th><th>User story</th><th>Feature</th><th>Size</th><th>Planned in</th><th>Done in</th></tr></thead>
+    <tbody>
+      <tr><td><i>Level designer</i></td><td><i>As a level designer I want … so that …</i></td><td><i>Player dummy</i></td><td><i>M</i></td><td><i>M3, M4</i></td><td><i>—</i></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td>&nbsp;</td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Extra <span class="tag">extra</span></h3>
+  <ul>
+    <li>Scatter along a spline (fences, rows of trees).</li>
+    <li>Rectangle fill and flood fill on the block grid.</li>
+    <li>More blockout shapes: ramp, stairs, wall with an opening.</li>
+    <li>A window built with UI Toolkit.</li>
+    <li>Naming checker for assets.</li>
+    <li>A second role feature.</li>
+  </ul>
+
+</section>
+
+<section class="panel" id="tech" role="tabpanel" aria-labelledby="t-tech" hidden>
+  <h2>Technical requirements</h2>
+  <ul>
+    <li>Unity 6.3 LTS, 3D project.</li>
+    <li>The toolkit is a <b>package</b> with its own <code>package.json</code>, installable from Git through the Package Manager.</li>
+    <li>Code split into a <b>Runtime</b> and an <b>Editor</b> assembly definition. The Runtime assembly never references <code>UnityEditor</code>: a build of a game that uses your toolkit must compile.</li>
+    <li>All the math (placement, spacing, grid snap, mesh generation) lives in <b>static classes</b> with no editor code, called by the tools.</li>
+    <li>Every tool supports Undo.</li>
+    <li>Git repository, with a tag for every delivery.</li>
+    <li>A README with: what the toolkit does, how to install it, how to use each tool, the choices you made.</li>
+    <li>AI tools are allowed if declared in the README. You must be able to explain and change any line of your code.</li>
+  </ul>
+</section>
+
+<section class="panel" id="ms" role="tabpanel" aria-labelledby="t-ms" hidden>
+  <h2>Milestones</h2>
+  <p>Each milestone is delivered with a Git tag <b>by 12:00 on the Wednesday</b> shown, and discussed in class the same afternoon. The details of each milestone are given when it is assigned.</p>
+  <p>Every milestone includes the <a href="#features" data-tab="features">reverse engineering analysis</a> of each core feature it asks for, in the shared repository: this is the group part, graded for the whole class and adjusted by each person's visible contribution in its history.</p>
+  <p>From M2 on, every milestone also includes the parts of your role feature that your plan puts there, and the plan table updated.</p>
+  <ol class="ms">
+    <li><div class="head"><span class="code">M1</span><span class="title">Analysis</span><span class="due">Wed, December 2</span></div>
+      <ul>
+        <li><b>Group:</b> interviews, catalog of user stories and feature proposals by role.</li>
+        <li><b>Individual:</b> at least three proposals picked from the catalog, with size and planned milestones.</li>
+        <li>Package with Runtime and Editor assemblies, installable in an empty project (the exercise from the first lesson).</li>
+      </ul></li>
+    <li><div class="head"><span class="code">M2</span><span class="title">Palette and attributes</span><span class="due">Wed, December 16</span></div>
+      <ul>
+        <li><b>Group:</b> reverse engineering analysis of the palette (Terrain: Paint Trees) and the attributes (Odin Inspector).</li>
+        <li>Prefab palettes saved as assets, one per theme, and the window that shows them.</li>
+        <li><code>[Button]</code>, <code>[ShowIf]</code> / <code>[HideIf]</code>, <code>[Required]</code>, <code>[MinMaxSlider]</code>, <code>[ReadOnly]</code>, <code>[InfoBox]</code>, used by the toolkit's settings.</li>
+      </ul></li>
+    <li><div class="head"><span class="code">M3</span><span class="title">Placement and scatter</span><span class="due">Wed, January 13</span></div>
+      <ul>
+        <li><b>Group:</b> reverse engineering analysis of presets (Unity Presets), placement and scatter (Terrain: Paint Trees and Paint Details).</li>
+        <li>Place prefabs on surfaces: normal alignment, grid snap, random rotation and scale.</li>
+        <li>Placement and scatter presets.</li>
+        <li>Scatter brush with radius, density and minimum spacing.</li>
+        <li>Eraser and brush preview.</li>
+        <li>Undo on every operation.</li>
+      </ul></li>
+    <li><div class="head"><span class="code">M4</span><span class="title">Blockout</span><span class="due">Wed, January 20</span></div>
+      <ul>
+        <li><b>Group:</b> reverse engineering analysis of blockout (ProBuilder), block grid (Unreal's Cube Grid) and scene notes (comments in Figma or Miro).</li>
+        <li>Box blockout shape, resized with handles.</li>
+        <li>Replace a blockout shape with a final prefab.</li>
+        <li>Block grid: paint, erase, clear.</li>
+        <li>Scene notes.</li>
+      </ul></li>
+    <li><div class="head"><span class="code">FIN</span><span class="title">Final delivery</span><span class="due">Wed, January 27</span></div>
+      <ul>
+        <li>Role feature complete, tried by a student of the role you built it for: one line in the README on what they said.</li>
+        <li>Extras, if any.</li>
+        <li>Release: tagged version installable from Git, README.</li>
+        <li>Live test: a classmate uses one of your tools following only your README.</li>
+        <li>Oral exam: you explain a part of your code and make a small change to it live.</li>
+      </ul></li>
+  </ol>
+</section>
+
+<footer>Indie Toolkit · Tool Programming, Game Programming 2 · Nash, 2026/27</footer>
+</div>
+
+<script>
+(function(){
+  var tabs=[].slice.call(document.querySelectorAll('nav.tabs [role=tab]'));
+  function show(id,push){
+    tabs.forEach(function(t){
+      var on=t.getAttribute('aria-controls')===id;
+      t.setAttribute('aria-selected',on?'true':'false');
+      t.tabIndex=on?0:-1;
+      document.getElementById(t.getAttribute('aria-controls')).hidden=!on;
+    });
+    if(push){try{history.replaceState(null,'','#'+id)}catch(e){}}
+  }
+  tabs.forEach(function(t,i){
+    t.addEventListener('click',function(){show(t.getAttribute('aria-controls'),true)});
+    t.addEventListener('keydown',function(e){
+      var d=e.key==='ArrowRight'?1:e.key==='ArrowLeft'?-1:0;
+      if(!d)return;var n=tabs[(i+d+tabs.length)%tabs.length];n.focus();n.click();
+    });
+  });
+  document.addEventListener('click',function(e){var a=e.target.closest('a[data-tab]');if(a){e.preventDefault();show(a.getAttribute('data-tab'),true);}});
+  var h=(location.hash||'').slice(1);
+  if(h&&document.getElementById(h)&&tabs.some(function(t){return t.getAttribute('aria-controls')===h}))show(h,false);
+})();
+</script>
+</body></html>
